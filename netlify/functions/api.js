@@ -11,14 +11,14 @@ class UserManager {
   constructor() {
     this.users = [];
     this.colors = [
-      '#FFFFFF', '#E5E5E5', '#CCCCCC', '#B3B3B3', '#999999',
-      '#808080', '#666666', '#4D4D4D', '#333333', '#1A1A1A',
-      '#F0F0F0', '#D9D9D9', '#BFBFBF', '#A6A6A6', '#8C8C8C'
+      '#10b981', '#059669', '#047857', '#065f46', '#064e3b',
+      '#34d399', '#6ee7b7', '#a7f3d0', '#d1fae5', '#ecfdf5',
+      '#14b8a6', '#0d9488', '#0f766e', '#115e59', '#134e4a'
     ];
     this.names = [
-      'Shadow Walker', 'Void Seeker', 'Grid Ghost', 'Block Phantom', 'Dark Knight',
-      'Steel Hunter', 'Iron Guardian', 'Stone Warrior', 'Pixel Sage', 'Code Ninja',
-      'Mono Master', 'Gray Fox', 'Silent Strike', 'Block Reaper', 'Grid Warden'
+      'Emerald Guardian', 'Forest Walker', 'Jade Master', 'Mint Ninja', 'Pine Warrior',
+      'Sage Hunter', 'Moss Keeper', 'Leaf Phantom', 'Grove Seeker', 'Verdant Knight',
+      'Cedar Ghost', 'Fern Sage', 'Ivy Reaper', 'Bamboo Fox', 'Olive Warden'
     ];
   }
 

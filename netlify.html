@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-            background: #0a0a0a;
+            background: linear-gradient(135deg, #0d1b0d 0%, #1a2e1a 50%, #2d4a2d 100%);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -22,9 +22,9 @@
         }
 
         .header {
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(16, 32, 16, 0.95);
             backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid rgba(34, 197, 94, 0.2);
             padding: 1rem 2rem;
             display: flex;
             align-items: center;
@@ -44,7 +44,7 @@
             font-size: 1.5rem;
             font-weight: 700;
             letter-spacing: -0.02em;
-            background: linear-gradient(135deg, #ffffff 0%, #888888 100%);
+            background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -54,7 +54,7 @@
             display: flex;
             gap: 2rem;
             font-size: 0.875rem;
-            color: #888;
+            color: #a7f3d0;
         }
 
         .header-stat {
@@ -67,7 +67,7 @@
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background: #22c55e;
+            background: #10b981;
             animation: pulse 2s infinite;
         }
 
@@ -98,8 +98,8 @@
             gap: 1rem;
             align-items: center;
             justify-content: space-between;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(16, 185, 129, 0.05);
+            border: 1px solid rgba(34, 197, 94, 0.15);
             border-radius: 12px;
             padding: 1rem;
         }
@@ -111,26 +111,27 @@
 
         .btn {
             padding: 0.5rem 1rem;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(34, 197, 94, 0.3);
             border-radius: 8px;
             cursor: pointer;
             font-weight: 500;
             font-size: 0.875rem;
             transition: all 0.15s ease;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(16, 185, 129, 0.1);
             color: white;
             backdrop-filter: blur(10px);
         }
 
         .btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(16, 185, 129, 0.2);
+            border-color: rgba(34, 197, 94, 0.5);
             transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.2);
         }
 
         .btn.active {
-            background: rgba(255, 255, 255, 0.15);
-            border-color: rgba(255, 255, 255, 0.4);
+            background: rgba(16, 185, 129, 0.3);
+            border-color: rgba(34, 197, 94, 0.6);
         }
 
         .game-area {
@@ -143,10 +144,10 @@
 
         .canvas-container {
             position: relative;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.2);
             border-radius: 16px;
             overflow: hidden;
-            background: #000000;
+            background: #0a1a0a;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -158,8 +159,8 @@
         }
 
         .minimap-container {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(16, 185, 129, 0.05);
+            border: 1px solid rgba(34, 197, 94, 0.15);
             border-radius: 12px;
             padding: 1rem;
             display: flex;
@@ -169,7 +170,7 @@
         .minimap-title {
             font-size: 0.75rem;
             font-weight: 600;
-            color: #888;
+            color: #a7f3d0;
             margin-bottom: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -178,9 +179,9 @@
         .minimap {
             width: 100%;
             height: 160px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.2);
             border-radius: 8px;
-            background: #000;
+            background: #0a1a0a;
         }
 
         .sidebar {
@@ -190,8 +191,8 @@
         }
 
         .panel {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(16, 185, 129, 0.05);
+            border: 1px solid rgba(34, 197, 94, 0.15);
             border-radius: 16px;
             padding: 1.5rem;
             backdrop-filter: blur(20px);
@@ -211,7 +212,7 @@
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background: #22c55e;
+            background: #10b981;
         }
 
         .stats-grid {
@@ -221,8 +222,8 @@
         }
 
         .stat-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.2);
             padding: 1rem;
             border-radius: 12px;
             text-align: center;
@@ -238,7 +239,7 @@
 
         .stat-label {
             font-size: 0.75rem;
-            color: #888;
+            color: #a7f3d0;
             font-weight: 500;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -248,7 +249,7 @@
             max-height: 200px;
             overflow-y: auto;
             scrollbar-width: thin;
-            scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+            scrollbar-color: rgba(34, 197, 94, 0.3) transparent;
         }
 
         .activity-item {
@@ -257,7 +258,7 @@
             gap: 0.75rem;
             padding: 0.5rem;
             margin-bottom: 0.5rem;
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(16, 185, 129, 0.03);
             border-radius: 8px;
             font-size: 0.875rem;
             opacity: 0;
@@ -278,12 +279,12 @@
 
         .activity-text {
             flex: 1;
-            color: #ccc;
+            color: #d1fae5;
         }
 
         .activity-time {
             font-size: 0.75rem;
-            color: #666;
+            color: #6ee7b7;
         }
 
         .leaderboard {
@@ -297,22 +298,22 @@
             gap: 0.75rem;
             padding: 0.75rem;
             margin-bottom: 0.5rem;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(16, 185, 129, 0.05);
+            border: 1px solid rgba(34, 197, 94, 0.1);
             border-radius: 10px;
             transition: all 0.2s ease;
         }
 
         .user-item:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(255, 255, 255, 0.15);
+            background: rgba(16, 185, 129, 0.1);
+            border-color: rgba(34, 197, 94, 0.3);
             transform: translateX(2px);
         }
 
         .user-rank {
             font-size: 0.75rem;
             font-weight: 700;
-            color: #888;
+            color: #a7f3d0;
             width: 20px;
         }
 
@@ -339,7 +340,7 @@
 
         .user-blocks {
             font-size: 0.75rem;
-            color: #888;
+            color: #a7f3d0;
         }
 
         .settings-panel {
@@ -355,21 +356,21 @@
 
         .setting-label {
             font-size: 0.875rem;
-            color: #ccc;
+            color: #d1fae5;
         }
 
         .toggle {
             width: 40px;
             height: 20px;
             border-radius: 10px;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(16, 185, 129, 0.2);
             position: relative;
             cursor: pointer;
             transition: background 0.2s ease;
         }
 
         .toggle.active {
-            background: #22c55e;
+            background: #10b981;
         }
 
         .toggle-thumb {
@@ -391,11 +392,12 @@
             position: absolute;
             top: 1rem;
             right: 1rem;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(16, 32, 16, 0.8);
             padding: 0.5rem;
             border-radius: 6px;
             font-size: 0.75rem;
-            color: #888;
+            color: #a7f3d0;
+            border: 1px solid rgba(34, 197, 94, 0.2);
         }
 
         @media (max-width: 1200px) {
@@ -852,7 +854,7 @@
 
                 // Draw grid if enabled
                 if (this.showGrid) {
-                    this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.06)';
+                    this.ctx.strokeStyle = 'rgba(34, 197, 94, 0.1)';
                     this.ctx.lineWidth = 0.5;
                     
                     for (let x = 0; x <= this.gridSize; x++) {
@@ -884,7 +886,7 @@
                     );
                     
                     // Add subtle border for distinction
-                    this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+                    this.ctx.strokeStyle = 'rgba(34, 197, 94, 0.4)';
                     this.ctx.lineWidth = 1;
                     this.ctx.strokeRect(
                         block.x * this.blockSize + 1,
@@ -921,7 +923,7 @@
                 const viewWidth = this.canvas.width / (this.blockSize * this.zoom);
                 const viewHeight = this.canvas.height / (this.blockSize * this.zoom);
                 
-                this.minimapCtx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
+                this.minimapCtx.strokeStyle = 'rgba(16, 185, 129, 0.8)';
                 this.minimapCtx.lineWidth = 1;
                 this.minimapCtx.strokeRect(
                     viewX * scaleX,
@@ -950,11 +952,11 @@
                 status.textContent = message;
                 
                 if (type === 'connected') {
-                    indicator.style.background = '#22c55e';
+                    indicator.style.background = '#10b981';
                 } else if (type === 'connecting') {
-                    indicator.style.background = '#fbbf24';
+                    indicator.style.background = '#f59e0b';
                 } else {
-                    indicator.style.background = '#ef4444';
+                    indicator.style.background = '#dc2626';
                 }
             }
 
