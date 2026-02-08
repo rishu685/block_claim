@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlockClaim - Real-time Multiplayer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            text-align: center;
+            color: white;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-container {
+            display: flex;
+            flex: 1;
+            padding: 2rem;
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .game-area {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar {
+            width: 300px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .canvas-container {
+            position: relative;
+            border: 3px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            background: white;
+            margin: 1rem 0;
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #gameCanvas {
+            cursor: crosshair;
+            border-radius: 7px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .leaderboard {
+            margin-top: 2rem;
+        }
+
+        .user-item {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem;
+            margin-bottom: 0.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            transition: transform 0.2s ease;
+        }
+
+        .user-item:hover {
+            transform: translateX(5px);
+        }
+
+        .user-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 1rem;
+            border: 2px solid white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .user-info {
+            flex: 1;
+        }
+
+        .user-name {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .user-blocks {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .status {
+            text-align: center;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .status.connected {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status.connecting {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status.disconnected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            .sidebar {
+                width: 100%;
+            }
+
+            .controls {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎮 BlockClaim</h1>
+        <p>Real-time Multiplayer Block Capture Game</p>
+    </div>
+
+    <div class="main-container">
+        <div class="game-area">
+            <div class="status connecting" id="status">
+                Connecting to game...
+            </div>
+
+            <div class="controls">
+                <button class="btn" onclick="zoomIn()">🔍 Zoom In</button>
+                <button class="btn" onclick="zoomOut()">🔍 Zoom Out</button>
+                <button class="btn" onclick="resetView()">🏠 Reset View</button>
+                <button class="btn" onclick="refreshGame()">🔄 Refresh</button>
+            </div>
+
+            <div class="canvas-container">
+                <canvas id="gameCanvas" width="600" height="600"></canvas>
+            </div>
+        </div>
+
+        <div class="sidebar">
+            <h3>📊 Game Statistics</h3>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-number" id="claimedBlocks">0</span>
+                    <span class="stat-label">Claimed</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="availableBlocks">2500</span>
+                    <span class="stat-label">Available</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="connectedUsers">0</span>
+                    <span class="stat-label">Players</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="yourBlocks">0</span>
+                    <span class="stat-label">Your Blocks</span>
+                </div>
+            </div>
+
+            <div class="leaderboard">
+                <h3>🏆 Leaderboard</h3>
+                <div id="leaderboard">
+                    <p style="text-align: center; color: #666; margin-top: 1rem;">No players yet</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class BlockClaimGame {
+            constructor() {
+                this.canvas = document.getElementById('gameCanvas');
+                this.ctx = this.canvas.getContext('2d');
+                this.gridSize = 50;
+                this.blockSize = 12;
+                this.offsetX = 0;
+                this.offsetY = 0;
+                this.zoom = 1;
+                this.blocks = {};
+                this.currentUser = null;
+                this.lastUpdate = Date.now();
+                this.pollInterval = null;
+
+                this.setupCanvas();
+                this.initializeGame();
+            }
+
+            async initializeGame() {
+                try {
+                    // Join the game
+                    const response = await fetch('/.netlify/functions/api/api/join', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' }
+                    });
+                    
+                    const data = await response.json();
+                    if (data.success) {
+                        this.currentUser = data.user;
+                        this.updateStatus('connected', `Connected as ${this.currentUser.name}`);
+                        this.startPolling();
+                    }
+                } catch (error) {
+                    console.error('Failed to initialize game:', error);
+                    this.updateStatus('disconnected', 'Failed to connect');
+                }
+            }
+
+            startPolling() {
+                // Poll for updates every 2 seconds
+                this.pollInterval = setInterval(() => {
+                    this.fetchUpdates();
+                }, 2000);
+                
+                // Initial fetch
+                this.fetchUpdates();
+            }
+
+            async fetchUpdates() {
+                try {
+                    // Fetch blocks
+                    const blocksResponse = await fetch('/.netlify/functions/api/api/blocks');
+                    const blocksData = await blocksResponse.json();
+                    
+                    if (blocksData.success) {
+                        this.updateBlocks(blocksData.blocks);
+                    }
+
+                    // Fetch stats
+                    const statsResponse = await fetch('/.netlify/functions/api/api/stats');
+                    const statsData = await statsResponse.json();
+                    
+                    if (statsData.success) {
+                        this.updateStats(statsData.stats);
+                    }
+                } catch (error) {
+                    console.error('Failed to fetch updates:', error);
+                }
+            }
+
+            updateBlocks(newBlocks) {
+                newBlocks.forEach(block => {
+                    const key = `${block.x}-${block.y}`;
+                    this.blocks[key] = block;
+                });
+                this.render();
+            }
+
+            updateStats(stats) {
+                document.getElementById('claimedBlocks').textContent = stats.totalClaimed || 0;
+                document.getElementById('availableBlocks').textContent = 2500 - (stats.totalClaimed || 0);
+                document.getElementById('connectedUsers').textContent = stats.connectedUsers || 0;
+
+                // Update leaderboard
+                this.updateLeaderboard(stats.users || []);
+
+                // Update your blocks count
+                if (this.currentUser && stats.users) {
+                    const currentUserStats = stats.users.find(u => u.id === this.currentUser.id);
+                    document.getElementById('yourBlocks').textContent = currentUserStats ? currentUserStats.blocksOwned : 0;
+                }
+            }
+
+            updateLeaderboard(users) {
+                const leaderboard = document.getElementById('leaderboard');
+                
+                if (users.length === 0) {
+                    leaderboard.innerHTML = '<p style="text-align: center; color: #666; margin-top: 1rem;">No players yet</p>';
+                    return;
+                }
+
+                const sortedUsers = users.sort((a, b) => b.blocksOwned - a.blocksOwned);
+                
+                leaderboard.innerHTML = sortedUsers.map((user, index) => `
+                    <div class="user-item ${user.id === this.currentUser?.id ? 'current-user' : ''}">
+                        <div class="user-color" style="background-color: ${user.color}"></div>
+                        <div class="user-info">
+                            <div class="user-name">${index + 1}. ${user.name}</div>
+                            <div class="user-blocks">${user.blocksOwned} blocks</div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            setupCanvas() {
+                this.canvas.addEventListener('click', (e) => this.handleCanvasClick(e));
+                this.canvas.addEventListener('wheel', (e) => this.handleWheel(e));
+                
+                // Mouse drag for panning
+                let isDragging = false;
+                let lastX, lastY;
+
+                this.canvas.addEventListener('mousedown', (e) => {
+                    isDragging = true;
+                    lastX = e.clientX;
+                    lastY = e.clientY;
+                });
+
+                this.canvas.addEventListener('mousemove', (e) => {
+                    if (isDragging) {
+                        const deltaX = e.clientX - lastX;
+                        const deltaY = e.clientY - lastY;
+                        this.offsetX += deltaX;
+                        this.offsetY += deltaY;
+                        lastX = e.clientX;
+                        lastY = e.clientY;
+                        this.render();
+                    }
+                });
+
+                this.canvas.addEventListener('mouseup', () => {
+                    isDragging = false;
+                });
+
+                this.render();
+            }
+
+            handleCanvasClick(e) {
+                if (!this.currentUser) return;
+
+                const rect = this.canvas.getBoundingClientRect();
+                const x = (e.clientX - rect.left - this.offsetX) / this.zoom;
+                const y = (e.clientY - rect.top - this.offsetY) / this.zoom;
+
+                const gridX = Math.floor(x / this.blockSize);
+                const gridY = Math.floor(y / this.blockSize);
+
+                if (gridX >= 0 && gridX < this.gridSize && gridY >= 0 && gridY < this.gridSize) {
+                    this.claimBlock(gridX, gridY);
+                }
+            }
+
+            async claimBlock(x, y) {
+                if (!this.currentUser) return;
+
+                try {
+                    const response = await fetch('/.netlify/functions/api/api/claim-block', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            x, y,
+                            userId: this.currentUser.id,
+                            userName: this.currentUser.name,
+                            userColor: this.currentUser.color
+                        })
+                    });
+
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        // Block claimed successfully - will be updated on next poll
+                        this.fetchUpdates(); // Immediate update
+                    } else {
+                        console.log('Block claim failed:', data.error);
+                    }
+                } catch (error) {
+                    console.error('Failed to claim block:', error);
+                }
+            }
+
+            handleWheel(e) {
+                e.preventDefault();
+                const scale = e.deltaY > 0 ? 0.9 : 1.1;
+                this.zoom = Math.max(0.5, Math.min(3, this.zoom * scale));
+                this.render();
+            }
+
+            render() {
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                this.ctx.save();
+                this.ctx.translate(this.offsetX, this.offsetY);
+                this.ctx.scale(this.zoom, this.zoom);
+
+                // Draw grid
+                this.ctx.strokeStyle = '#e0e0e0';
+                this.ctx.lineWidth = 0.5;
+                
+                for (let x = 0; x <= this.gridSize; x++) {
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(x * this.blockSize, 0);
+                    this.ctx.lineTo(x * this.blockSize, this.gridSize * this.blockSize);
+                    this.ctx.stroke();
+                }
+                
+                for (let y = 0; y <= this.gridSize; y++) {
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(0, y * this.blockSize);
+                    this.ctx.lineTo(this.gridSize * this.blockSize, y * this.blockSize);
+                    this.ctx.stroke();
+                }
+
+                // Draw claimed blocks
+                Object.values(this.blocks).forEach(block => {
+                    this.ctx.fillStyle = block.ownerColor;
+                    this.ctx.fillRect(
+                        block.x * this.blockSize + 1,
+                        block.y * this.blockSize + 1,
+                        this.blockSize - 2,
+                        this.blockSize - 2
+                    );
+                });
+
+                this.ctx.restore();
+            }
+
+            updateStatus(type, message) {
+                const status = document.getElementById('status');
+                status.className = `status ${type}`;
+                status.textContent = message;
+            }
+
+            zoomIn() {
+                this.zoom = Math.min(3, this.zoom * 1.2);
+                this.render();
+            }
+
+            zoomOut() {
+                this.zoom = Math.max(0.5, this.zoom / 1.2);
+                this.render();
+            }
+
+            resetView() {
+                this.zoom = 1;
+                this.offsetX = 0;
+                this.offsetY = 0;
+                this.render();
+            }
+
+            refresh() {
+                this.fetchUpdates();
+            }
+        }
+
+        // Global functions for buttons
+        let game;
+
+        function zoomIn() { game.zoomIn(); }
+        function zoomOut() { game.zoomOut(); }
+        function resetView() { game.resetView(); }
+        function refreshGame() { game.refresh(); }
+
+        // Start the game when page loads
+        window.addEventListener('load', () => {
+            game = new BlockClaimGame();
+        });
+    </script>
+</body>
+</html>
