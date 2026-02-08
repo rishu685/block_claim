@@ -278,7 +278,7 @@
             async initializeGame() {
                 try {
                     // Join the game
-                    const response = await fetch('/.netlify/functions/api/api/join', {
+                    const response = await fetch('/api/join', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' }
                     });
@@ -308,7 +308,7 @@
             async fetchUpdates() {
                 try {
                     // Fetch blocks
-                    const blocksResponse = await fetch('/.netlify/functions/api/api/blocks');
+                    const blocksResponse = await fetch('/api/blocks');
                     const blocksData = await blocksResponse.json();
                     
                     if (blocksData.success) {
@@ -316,7 +316,7 @@
                     }
 
                     // Fetch stats
-                    const statsResponse = await fetch('/.netlify/functions/api/api/stats');
+                    const statsResponse = await fetch('/api/stats');
                     const statsData = await statsResponse.json();
                     
                     if (statsData.success) {
@@ -423,7 +423,7 @@
                 if (!this.currentUser) return;
 
                 try {
-                    const response = await fetch('/.netlify/functions/api/api/claim-block', {
+                    const response = await fetch('/api/claim-block', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({

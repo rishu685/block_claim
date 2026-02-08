@@ -105,11 +105,15 @@ function isValidCoordinate(x, y) {
 function serveStaticFile(filePath) {
   try {
     let fullPath;
-    if (filePath === 'simple.html' || filePath === '/') {
-      fullPath = path.join(__dirname, '../../simple.html');
+    if (filePath === 'netlify.html' || filePath === '/') {
+      fullPath = path.join(__dirname, '../../netlify.html');
+    } else if (filePath === 'index.html') {
+      fullPath = path.join(__dirname, '../../index.html');
     } else {
       fullPath = path.join(__dirname, '../../', filePath);
     }
+    
+    console.log('Trying to serve file:', fullPath); // Debug logging
     
     const content = fs.readFileSync(fullPath);
     let contentType = 'text/plain';
@@ -127,6 +131,7 @@ function serveStaticFile(filePath) {
       body: content.toString()
     };
   } catch (error) {
+    console.log('File serve error:', error.message); // Debug logging
     return {
       statusCode: 404,
       headers: {
@@ -140,6 +145,8 @@ function serveStaticFile(filePath) {
 
 exports.handler = async (event, context) => {
   const { httpMethod, path: requestPath, queryStringParameters, body } = event;
+  
+  console.log('Request:', httpMethod, requestPath); // Debug logging
   
   // CORS headers
   const headers = {
@@ -157,21 +164,32 @@ exports.handler = async (event, context) => {
     };
   }
 
+  // Clean up path - remove leading /api if present
+  let cleanPath = requestPath;
+  if (cleanPath.startsWith('/api')) {
+    cleanPath = cleanPath.substring(4);
+  }
+  if (cleanPath === '') {
+    cleanPath = '/';
+  }
+
+  console.log('Clean path:', cleanPath); // Debug logging
+
   // Route handling
-  if (requestPath === '/' || requestPath === '/index.html') {
-    return serveStaticFile('simple.html');
+  if (cleanPath === '/' || cleanPath === '/index.html') {
+    return serveStaticFile('netlify.html');
   }
   
-  if (requestPath.startsWith('/css/')) {
-    return serveStaticFile(`public${requestPath}`);
+  if (cleanPath.startsWith('/css/')) {
+    return serveStaticFile(`public${cleanPath}`);
   }
   
-  if (requestPath.startsWith('/js/')) {
-    return serveStaticFile(`public${requestPath}`);
+  if (cleanPath.startsWith('/js/')) {
+    return serveStaticFile(`public${cleanPath}`);
   }
 
   // API routes
-  if (requestPath === '/api/blocks' && httpMethod === 'GET') {
+  if (cleanPath === '/blocks' && httpMethod === 'GET') {
     try {
       const blocks = blockModel.getAllBlocksSync();
       return {
@@ -188,7 +206,7 @@ exports.handler = async (event, context) => {
     }
   }
 
-  if (requestPath === '/api/stats' && httpMethod === 'GET') {
+  if (cleanPath === '/stats' && httpMethod === 'GET') {
     try {
       const statsData = await blockModel.getStats();
       const usersData = userManager.getConnectedUsers();
@@ -219,7 +237,7 @@ exports.handler = async (event, context) => {
     }
   }
 
-  if (requestPath === '/api/join' && httpMethod === 'POST') {
+  if (cleanPath === '/join' && httpMethod === 'POST') {
     const userId = generateId();
     const user = userManager.createUser(userId);
     
@@ -237,7 +255,7 @@ exports.handler = async (event, context) => {
     };
   }
 
-  if (requestPath === '/api/claim-block' && httpMethod === 'POST') {
+  if (cleanPath === '/claim-block' && httpMethod === 'POST') {
     try {
       const { x, y, userId, userName, userColor } = JSON.parse(body);
       
