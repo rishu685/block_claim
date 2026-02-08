@@ -852,6 +852,10 @@
                 this.ctx.translate(this.offsetX, this.offsetY);
                 this.ctx.scale(this.zoom, this.zoom);
 
+                // Draw grid background area
+                this.ctx.fillStyle = 'rgba(30, 41, 59, 0.8)'; // Dark slate background
+                this.ctx.fillRect(0, 0, this.gridSize * this.blockSize, this.gridSize * this.blockSize);
+
                 // Draw grid if enabled
                 if (this.showGrid) {
                     this.ctx.strokeStyle = 'rgba(200, 200, 200, 0.8)';
@@ -901,6 +905,10 @@
 
             renderMinimap() {
                 this.minimapCtx.clearRect(0, 0, this.minimap.width, this.minimap.height);
+                
+                // Draw minimap background
+                this.minimapCtx.fillStyle = 'rgba(30, 41, 59, 0.8)'; 
+                this.minimapCtx.fillRect(0, 0, this.minimap.width, this.minimap.height);
                 
                 const scaleX = this.minimap.width / this.gridSize;
                 const scaleY = this.minimap.height / this.gridSize;
