@@ -13,77 +13,140 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-            background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #2d2d2d 100%);
+            background: #0a0a0a;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             color: #ffffff;
+            overflow-x: hidden;
         }
 
         .header {
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.95);
             backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 2rem;
-            text-align: center;
-            color: white;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
-        .header h1 {
-            font-size: 3rem;
-            font-weight: 800;
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
             letter-spacing: -0.02em;
-            background: linear-gradient(135deg, #ffffff 0%, #cccccc 100%);
+            background: linear-gradient(135deg, #ffffff 0%, #888888 100%);
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 0.5rem;
         }
 
-        .header p {
-            font-size: 1.1rem;
-            color: #999999;
-            font-weight: 400;
+        .header-stats {
+            display: flex;
+            gap: 2rem;
+            font-size: 0.875rem;
+            color: #888;
+        }
+
+        .header-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .stat-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #22c55e;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
         }
 
         .main-container {
-            display: flex;
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 1.5rem;
+            padding: 1.5rem;
             flex: 1;
-            padding: 2rem;
-            gap: 2rem;
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto;
             width: 100%;
         }
 
-        .game-area {
-            flex: 1;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 2rem;
-            backdrop-filter: blur(20px);
+        .game-section {
             display: flex;
             flex-direction: column;
+            gap: 1rem;
         }
 
-        .sidebar {
-            width: 320px;
+        .controls-panel {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 1rem;
+        }
+
+        .control-group {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.875rem;
+            transition: all 0.15s ease;
             background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 2rem;
-            backdrop-filter: blur(20px);
+            color: white;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .btn.active {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .game-area {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 200px;
+            gap: 1rem;
+            min-height: 600px;
         }
 
         .canvas-container {
             position: relative;
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 16px;
             overflow: hidden;
             background: #000000;
-            margin: 1.5rem 0;
-            flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -91,231 +154,397 @@
 
         #gameCanvas {
             cursor: crosshair;
-            border-radius: 14px;
+            transition: opacity 0.2s ease;
         }
 
-        .controls {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 0.8rem 1.8rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        .minimap-container {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 12px;
-            cursor: pointer;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .minimap-title {
+            font-size: 0.75rem;
             font-weight: 600;
-            font-size: 0.9rem;
-            transition: all 0.2s ease;
-            background: rgba(255, 255, 255, 0.1);
+            color: #888;
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .minimap {
+            width: 100%;
+            height: 160px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            background: #000;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .panel {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 1.5rem;
+            backdrop-filter: blur(20px);
+        }
+
+        .panel-title {
+            font-size: 1rem;
+            font-weight: 600;
             color: white;
-            backdrop-filter: blur(10px);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .btn:hover {
-            transform: translateY(-1px);
-            background: rgba(255, 255, 255, 0.2);
-            border-color: rgba(255, 255, 255, 0.4);
-            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
-        }
-
-        .btn:active {
-            transform: translateY(0);
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #22c55e;
         }
 
         .stats-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-bottom: 2rem;
+            gap: 0.75rem;
         }
 
         .stat-card {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: white;
-            padding: 1.5rem;
-            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 1rem;
+            border-radius: 12px;
             text-align: center;
-            backdrop-filter: blur(10px);
         }
 
         .stat-number {
-            font-size: 2.2rem;
+            font-size: 1.75rem;
             font-weight: 700;
             display: block;
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.25rem;
+            color: #fff;
         }
 
         .stat-label {
-            font-size: 0.85rem;
-            color: #cccccc;
+            font-size: 0.75rem;
+            color: #888;
             font-weight: 500;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
-        .leaderboard {
-            margin-top: 2rem;
+        .activity-feed {
+            max-height: 200px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
         }
 
-        .leaderboard h3 {
-            color: white;
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
-            font-weight: 600;
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+            font-size: 0.875rem;
+            opacity: 0;
+            animation: slideIn 0.3s ease forwards;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .activity-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        .activity-text {
+            flex: 1;
+            color: #ccc;
+        }
+
+        .activity-time {
+            font-size: 0.75rem;
+            color: #666;
+        }
+
+        .leaderboard {
+            max-height: 300px;
+            overflow-y: auto;
         }
 
         .user-item {
             display: flex;
             align-items: center;
-            padding: 1rem;
-            margin-bottom: 0.8rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
             transition: all 0.2s ease;
         }
 
         .user-item:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.15);
             transform: translateX(2px);
         }
 
+        .user-rank {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #888;
+            width: 20px;
+        }
+
         .user-color {
-            width: 16px;
-            height: 16px;
-            border-radius: 4px;
-            margin-right: 1rem;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .user-info {
             flex: 1;
+            min-width: 0;
         }
 
         .user-name {
             font-weight: 600;
-            color: #ffffff;
-            font-size: 0.95rem;
+            color: #fff;
+            font-size: 0.875rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .user-blocks {
-            font-size: 0.8rem;
-            color: #999999;
-            margin-top: 0.2rem;
+            font-size: 0.75rem;
+            color: #888;
         }
 
-        .status {
-            text-align: center;
-            padding: 1rem 1.5rem;
-            border-radius: 12px;
-            margin-bottom: 1.5rem;
-            font-weight: 500;
-            border: 1px solid;
+        .settings-panel {
+            padding: 1rem;
         }
 
-        .status.connected {
-            background: rgba(34, 197, 94, 0.1);
-            border-color: rgba(34, 197, 94, 0.3);
-            color: #22c55e;
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
         }
 
-        .status.connecting {
-            background: rgba(251, 191, 36, 0.1);
-            border-color: rgba(251, 191, 36, 0.3);
-            color: #fbbf24;
+        .setting-label {
+            font-size: 0.875rem;
+            color: #ccc;
         }
 
-        .status.disconnected {
-            background: rgba(239, 68, 68, 0.1);
-            border-color: rgba(239, 68, 68, 0.3);
-            color: #ef4444;
+        .toggle {
+            width: 40px;
+            height: 20px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            position: relative;
+            cursor: pointer;
+            transition: background 0.2s ease;
         }
 
-        .sidebar h3 {
-            color: white;
-            margin-bottom: 1.5rem;
-            font-size: 1.2rem;
-            font-weight: 600;
+        .toggle.active {
+            background: #22c55e;
+        }
+
+        .toggle-thumb {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: white;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            transition: transform 0.2s ease;
+        }
+
+        .toggle.active .toggle-thumb {
+            transform: translateX(20px);
+        }
+
+        .coordinates {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 0.5rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            color: #888;
+        }
+
+        @media (max-width: 1200px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .game-area {
+                grid-template-columns: 1fr;
+                min-height: 500px;
+            }
+            
+            .minimap-container {
+                display: none;
+            }
         }
 
         @media (max-width: 768px) {
-            .main-container {
-                flex-direction: column;
+            .header {
                 padding: 1rem;
             }
-
-            .sidebar {
-                width: 100%;
+            
+            .header-stats {
+                display: none;
             }
-
-            .controls {
+            
+            .controls-panel {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .control-group {
                 justify-content: center;
-            }
-
-            .header h1 {
-                font-size: 2rem;
-            }
-
-            .header p {
-                font-size: 1rem;
             }
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>BlockClaim</h1>
-        <p>Real-time Multiplayer Block Capture Game</p>
+        <div class="logo">
+            <h1>BlockClaim</h1>
+        </div>
+        <div class="header-stats">
+            <div class="header-stat">
+                <div class="stat-dot"></div>
+                <span id="headerPlayers">1 Player Online</span>
+            </div>
+            <div class="header-stat">
+                <span id="headerClaimed">4 Blocks Claimed</span>
+            </div>
+        </div>
     </div>
 
     <div class="main-container">
-        <div class="game-area">
-            <div class="status connecting" id="status">
-                Connecting to game...
+        <div class="game-section">
+            <div class="controls-panel">
+                <div class="control-group">
+                    <button class="btn" onclick="zoomIn()">Zoom In</button>
+                    <button class="btn" onclick="zoomOut()">Zoom Out</button>
+                    <button class="btn" onclick="resetView()">Reset View</button>
+                    <button class="btn" onclick="refreshGame()">Refresh</button>
+                </div>
+                <div class="control-group">
+                    <button class="btn" onclick="toggleGrid()" id="gridToggle">Grid: On</button>
+                    <button class="btn" onclick="toggleSound()" id="soundToggle">Sound: Off</button>
+                </div>
             </div>
 
-            <div class="controls">
-                <button class="btn" onclick="zoomIn()">Zoom In</button>
-                <button class="btn" onclick="zoomOut()">Zoom Out</button>
-                <button class="btn" onclick="resetView()">Reset View</button>
-                <button class="btn" onclick="refreshGame()">Refresh</button>
-            </div>
+            <div class="game-area">
+                <div class="canvas-container">
+                    <canvas id="gameCanvas" width="600" height="600"></canvas>
+                    <div class="coordinates" id="coordinates">Move mouse to see coordinates</div>
+                </div>
 
-            <div class="canvas-container">
-                <canvas id="gameCanvas" width="600" height="600"></canvas>
+                <div class="minimap-container">
+                    <div class="minimap-title">Map Overview</div>
+                    <canvas id="minimap" class="minimap" width="180" height="180"></canvas>
+                </div>
             </div>
         </div>
 
         <div class="sidebar">
-            <h3>Game Statistics</h3>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <span class="stat-number" id="claimedBlocks">0</span>
-                    <span class="stat-label">Claimed</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-number" id="availableBlocks">2500</span>
-                    <span class="stat-label">Available</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-number" id="connectedUsers">0</span>
-                    <span class="stat-label">Players</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-number" id="yourBlocks">0</span>
-                    <span class="stat-label">Your Blocks</span>
+            <div class="panel">
+                <div class="panel-title">
+                    <div class="status-indicator" id="statusIndicator"></div>
+                    <span id="connectionStatus">Connected as Pixel Sage</span>
                 </div>
             </div>
 
-            <div class="leaderboard">
-                <h3>Leaderboard</h3>
-                <div id="leaderboard">
+            <div class="panel">
+                <div class="panel-title">Statistics</div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-number" id="claimedBlocks">4</span>
+                        <span class="stat-label">Claimed</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" id="availableBlocks">2496</span>
+                        <span class="stat-label">Available</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" id="connectedUsers">1</span>
+                        <span class="stat-label">Players</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" id="yourBlocks">0</span>
+                        <span class="stat-label">Your Blocks</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-title">Recent Activity</div>
+                <div class="activity-feed" id="activityFeed">
+                    <div class="activity-item">
+                        <div class="activity-avatar" style="background: #888;"></div>
+                        <div class="activity-text">Game started</div>
+                        <div class="activity-time">now</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-title">Leaderboard</div>
+                <div class="leaderboard" id="leaderboard">
                     <p style="text-align: center; color: #666; margin-top: 1rem;">No players yet</p>
+                </div>
+            </div>
+
+            <div class="panel settings-panel">
+                <div class="panel-title">Settings</div>
+                <div class="setting-item">
+                    <span class="setting-label">Show Grid</span>
+                    <div class="toggle active" onclick="toggleGridSetting(this)">
+                        <div class="toggle-thumb"></div>
+                    </div>
+                </div>
+                <div class="setting-item">
+                    <span class="setting-label">Auto Refresh</span>
+                    <div class="toggle active" onclick="toggleAutoRefresh(this)">
+                        <div class="toggle-thumb"></div>
+                    </div>
+                </div>
+                <div class="setting-item">
+                    <span class="setting-label">Sound Effects</span>
+                    <div class="toggle" onclick="toggleSoundSetting(this)">
+                        <div class="toggle-thumb"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -326,6 +555,8 @@
             constructor() {
                 this.canvas = document.getElementById('gameCanvas');
                 this.ctx = this.canvas.getContext('2d');
+                this.minimap = document.getElementById('minimap');
+                this.minimapCtx = this.minimap.getContext('2d');
                 this.gridSize = 50;
                 this.blockSize = 12;
                 this.offsetX = 0;
@@ -335,8 +566,13 @@
                 this.currentUser = null;
                 this.lastUpdate = Date.now();
                 this.pollInterval = null;
-
+                this.showGrid = true;
+                this.soundEnabled = false;
+                this.autoRefresh = true;
+                this.activityItems = [];
+                
                 this.setupCanvas();
+                this.setupMinimap();
                 this.initializeGame();
             }
 
@@ -351,19 +587,37 @@
                     const data = await response.json();
                     if (data.success) {
                         this.currentUser = data.user;
-                        this.updateStatus('connected', `Connected as ${this.currentUser.name}`);
-                        this.startPolling();
+                        this.updateConnectionStatus('connected', `Connected as ${this.currentUser.name}`);
+                        this.addActivity(`${this.currentUser.name} joined the game`, this.currentUser.color);
+                        if (this.autoRefresh) {
+                            this.startPolling();
+                        }
                     }
                 } catch (error) {
                     console.error('Failed to initialize game:', error);
-                    this.updateStatus('disconnected', 'Failed to connect');
+                    this.updateConnectionStatus('disconnected', 'Failed to connect');
                 }
+            }
+
+            setupMinimap() {
+                this.minimap.addEventListener('click', (e) => {
+                    const rect = this.minimap.getBoundingClientRect();
+                    const x = (e.clientX - rect.left) / this.minimap.width;
+                    const y = (e.clientY - rect.top) / this.minimap.height;
+                    
+                    // Center the main view on clicked minimap position
+                    this.offsetX = -(x * this.gridSize * this.blockSize * this.zoom) + this.canvas.width / 2;
+                    this.offsetY = -(y * this.gridSize * this.blockSize * this.zoom) + this.canvas.height / 2;
+                    this.render();
+                });
             }
 
             startPolling() {
                 // Poll for updates every 2 seconds
                 this.pollInterval = setInterval(() => {
-                    this.fetchUpdates();
+                    if (this.autoRefresh) {
+                        this.fetchUpdates();
+                    }
                 }, 2000);
                 
                 // Initial fetch
@@ -389,21 +643,39 @@
                     }
                 } catch (error) {
                     console.error('Failed to fetch updates:', error);
+                    this.updateConnectionStatus('disconnected', 'Connection lost');
                 }
             }
 
             updateBlocks(newBlocks) {
+                const previousCount = Object.keys(this.blocks).length;
+                
                 newBlocks.forEach(block => {
                     const key = `${block.x}-${block.y}`;
+                    if (!this.blocks[key]) {
+                        // New block claimed
+                        this.addActivity(`${block.ownerName} claimed a block`, block.ownerColor);
+                        if (this.soundEnabled) {
+                            this.playSound('claim');
+                        }
+                    }
                     this.blocks[key] = block;
                 });
+                
                 this.render();
+                this.renderMinimap();
             }
 
             updateStats(stats) {
                 document.getElementById('claimedBlocks').textContent = stats.totalClaimed || 0;
                 document.getElementById('availableBlocks').textContent = 2500 - (stats.totalClaimed || 0);
                 document.getElementById('connectedUsers').textContent = stats.connectedUsers || 0;
+                
+                // Update header stats
+                document.getElementById('headerPlayers').textContent = 
+                    `${stats.connectedUsers || 1} Player${stats.connectedUsers !== 1 ? 's' : ''} Online`;
+                document.getElementById('headerClaimed').textContent = 
+                    `${stats.totalClaimed || 0} Blocks Claimed`;
 
                 // Update leaderboard
                 this.updateLeaderboard(stats.users || []);
@@ -419,7 +691,7 @@
                 const leaderboard = document.getElementById('leaderboard');
                 
                 if (users.length === 0) {
-                    leaderboard.innerHTML = '<p style="text-align: center; color: #666; margin-top: 1rem;">No players yet</p>';
+                    leaderboard.innerHTML = '<p style="text-align: center; color: #666; font-size: 0.875rem;">No players yet</p>';
                     return;
                 }
 
@@ -427,11 +699,39 @@
                 
                 leaderboard.innerHTML = sortedUsers.map((user, index) => `
                     <div class="user-item ${user.id === this.currentUser?.id ? 'current-user' : ''}">
+                        <div class="user-rank">#${index + 1}</div>
                         <div class="user-color" style="background-color: ${user.color}"></div>
                         <div class="user-info">
-                            <div class="user-name">#${index + 1} ${user.name}</div>
-                            <div class="user-blocks">${user.blocksOwned} blocks claimed</div>
+                            <div class="user-name">${user.name}</div>
+                            <div class="user-blocks">${user.blocksOwned} blocks</div>
                         </div>
+                    </div>
+                `).join('');
+            }
+
+            addActivity(text, color = '#888') {
+                const activity = {
+                    text,
+                    color,
+                    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                    id: Date.now()
+                };
+                
+                this.activityItems.unshift(activity);
+                if (this.activityItems.length > 20) {
+                    this.activityItems = this.activityItems.slice(0, 20);
+                }
+                
+                this.renderActivityFeed();
+            }
+
+            renderActivityFeed() {
+                const feed = document.getElementById('activityFeed');
+                feed.innerHTML = this.activityItems.map(item => `
+                    <div class="activity-item">
+                        <div class="activity-avatar" style="background-color: ${item.color};"></div>
+                        <div class="activity-text">${item.text}</div>
+                        <div class="activity-time">${item.time}</div>
                     </div>
                 `).join('');
             }
@@ -439,6 +739,7 @@
             setupCanvas() {
                 this.canvas.addEventListener('click', (e) => this.handleCanvasClick(e));
                 this.canvas.addEventListener('wheel', (e) => this.handleWheel(e));
+                this.canvas.addEventListener('mousemove', (e) => this.handleMouseMove(e));
                 
                 // Mouse drag for panning
                 let isDragging = false;
@@ -466,7 +767,27 @@
                     isDragging = false;
                 });
 
+                this.canvas.addEventListener('mouseleave', () => {
+                    isDragging = false;
+                    document.getElementById('coordinates').textContent = 'Move mouse to see coordinates';
+                });
+
                 this.render();
+            }
+
+            handleMouseMove(e) {
+                const rect = this.canvas.getBoundingClientRect();
+                const x = (e.clientX - rect.left - this.offsetX) / this.zoom;
+                const y = (e.clientY - rect.top - this.offsetY) / this.zoom;
+
+                const gridX = Math.floor(x / this.blockSize);
+                const gridY = Math.floor(y / this.blockSize);
+
+                if (gridX >= 0 && gridX < this.gridSize && gridY >= 0 && gridY < this.gridSize) {
+                    document.getElementById('coordinates').textContent = `${gridX}, ${gridY}`;
+                } else {
+                    document.getElementById('coordinates').textContent = 'Outside grid';
+                }
             }
 
             handleCanvasClick(e) {
@@ -506,6 +827,9 @@
                         this.fetchUpdates(); // Immediate update
                     } else {
                         console.log('Block claim failed:', data.error);
+                        if (this.soundEnabled) {
+                            this.playSound('error');
+                        }
                     }
                 } catch (error) {
                     console.error('Failed to claim block:', error);
@@ -515,7 +839,7 @@
             handleWheel(e) {
                 e.preventDefault();
                 const scale = e.deltaY > 0 ? 0.9 : 1.1;
-                this.zoom = Math.max(0.5, Math.min(3, this.zoom * scale));
+                this.zoom = Math.max(0.3, Math.min(4, this.zoom * scale));
                 this.render();
             }
 
@@ -526,22 +850,24 @@
                 this.ctx.translate(this.offsetX, this.offsetY);
                 this.ctx.scale(this.zoom, this.zoom);
 
-                // Draw sophisticated grid
-                this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
-                this.ctx.lineWidth = 0.5;
-                
-                for (let x = 0; x <= this.gridSize; x++) {
-                    this.ctx.beginPath();
-                    this.ctx.moveTo(x * this.blockSize, 0);
-                    this.ctx.lineTo(x * this.blockSize, this.gridSize * this.blockSize);
-                    this.ctx.stroke();
-                }
-                
-                for (let y = 0; y <= this.gridSize; y++) {
-                    this.ctx.beginPath();
-                    this.ctx.moveTo(0, y * this.blockSize);
-                    this.ctx.lineTo(this.gridSize * this.blockSize, y * this.blockSize);
-                    this.ctx.stroke();
+                // Draw grid if enabled
+                if (this.showGrid) {
+                    this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.06)';
+                    this.ctx.lineWidth = 0.5;
+                    
+                    for (let x = 0; x <= this.gridSize; x++) {
+                        this.ctx.beginPath();
+                        this.ctx.moveTo(x * this.blockSize, 0);
+                        this.ctx.lineTo(x * this.blockSize, this.gridSize * this.blockSize);
+                        this.ctx.stroke();
+                    }
+                    
+                    for (let y = 0; y <= this.gridSize; y++) {
+                        this.ctx.beginPath();
+                        this.ctx.moveTo(0, y * this.blockSize);
+                        this.ctx.lineTo(this.gridSize * this.blockSize, y * this.blockSize);
+                        this.ctx.stroke();
+                    }
                 }
 
                 // Draw claimed blocks with monochrome theme
@@ -558,7 +884,7 @@
                     );
                     
                     // Add subtle border for distinction
-                    this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+                    this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
                     this.ctx.lineWidth = 1;
                     this.ctx.strokeRect(
                         block.x * this.blockSize + 1,
@@ -569,6 +895,40 @@
                 });
 
                 this.ctx.restore();
+            }
+
+            renderMinimap() {
+                this.minimapCtx.clearRect(0, 0, this.minimap.width, this.minimap.height);
+                
+                const scaleX = this.minimap.width / this.gridSize;
+                const scaleY = this.minimap.height / this.gridSize;
+                
+                // Draw claimed blocks on minimap
+                Object.values(this.blocks).forEach(block => {
+                    const intensity = this.getGrayscaleFromColor(block.ownerColor);
+                    this.minimapCtx.fillStyle = `rgba(255, 255, 255, ${intensity})`;
+                    this.minimapCtx.fillRect(
+                        block.x * scaleX,
+                        block.y * scaleY,
+                        scaleX,
+                        scaleY
+                    );
+                });
+                
+                // Draw viewport indicator
+                const viewX = -this.offsetX / (this.blockSize * this.zoom);
+                const viewY = -this.offsetY / (this.blockSize * this.zoom);
+                const viewWidth = this.canvas.width / (this.blockSize * this.zoom);
+                const viewHeight = this.canvas.height / (this.blockSize * this.zoom);
+                
+                this.minimapCtx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
+                this.minimapCtx.lineWidth = 1;
+                this.minimapCtx.strokeRect(
+                    viewX * scaleX,
+                    viewY * scaleY,
+                    viewWidth * scaleX,
+                    viewHeight * scaleY
+                );
             }
 
             getGrayscaleFromColor(hexColor) {
@@ -582,19 +942,65 @@
                 return Math.min(0.9, Math.max(0.2, luminance)); // Ensure visibility
             }
 
-            updateStatus(type, message) {
-                const status = document.getElementById('status');
-                status.className = `status ${type}`;
+            updateConnectionStatus(type, message) {
+                const indicator = document.getElementById('statusIndicator');
+                const status = document.getElementById('connectionStatus');
+                
+                indicator.className = 'status-indicator';
                 status.textContent = message;
+                
+                if (type === 'connected') {
+                    indicator.style.background = '#22c55e';
+                } else if (type === 'connecting') {
+                    indicator.style.background = '#fbbf24';
+                } else {
+                    indicator.style.background = '#ef4444';
+                }
+            }
+
+            playSound(type) {
+                // Simple sound feedback using Web Audio API
+                if (!this.soundEnabled) return;
+                
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                if (type === 'claim') {
+                    oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+                    oscillator.frequency.exponentialRampToValueAtTime(400, audioContext.currentTime + 0.1);
+                } else if (type === 'error') {
+                    oscillator.frequency.setValueAtTime(300, audioContext.currentTime);
+                }
+                
+                gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.1);
+            }
+
+            toggleGrid() {
+                this.showGrid = !this.showGrid;
+                this.render();
+                document.getElementById('gridToggle').textContent = `Grid: ${this.showGrid ? 'On' : 'Off'}`;
+            }
+
+            toggleSound() {
+                this.soundEnabled = !this.soundEnabled;
+                document.getElementById('soundToggle').textContent = `Sound: ${this.soundEnabled ? 'On' : 'Off'}`;
             }
 
             zoomIn() {
-                this.zoom = Math.min(3, this.zoom * 1.2);
+                this.zoom = Math.min(4, this.zoom * 1.2);
                 this.render();
             }
 
             zoomOut() {
-                this.zoom = Math.max(0.5, this.zoom / 1.2);
+                this.zoom = Math.max(0.3, this.zoom / 1.2);
                 this.render();
             }
 
@@ -607,16 +1013,44 @@
 
             refresh() {
                 this.fetchUpdates();
+                this.addActivity('Game refreshed', '#888');
             }
         }
 
-        // Global functions for buttons
+        // Global functions for buttons and settings
         let game;
 
         function zoomIn() { game.zoomIn(); }
         function zoomOut() { game.zoomOut(); }
         function resetView() { game.resetView(); }
         function refreshGame() { game.refresh(); }
+        function toggleGrid() { game.toggleGrid(); }
+        function toggleSound() { game.toggleSound(); }
+
+        function toggleGridSetting(toggle) {
+            toggle.classList.toggle('active');
+            game.showGrid = toggle.classList.contains('active');
+            game.render();
+            document.getElementById('gridToggle').textContent = `Grid: ${game.showGrid ? 'On' : 'Off'}`;
+        }
+
+        function toggleAutoRefresh(toggle) {
+            toggle.classList.toggle('active');
+            game.autoRefresh = toggle.classList.contains('active');
+            
+            if (game.autoRefresh && !game.pollInterval) {
+                game.startPolling();
+            } else if (!game.autoRefresh && game.pollInterval) {
+                clearInterval(game.pollInterval);
+                game.pollInterval = null;
+            }
+        }
+
+        function toggleSoundSetting(toggle) {
+            toggle.classList.toggle('active');
+            game.soundEnabled = toggle.classList.contains('active');
+            document.getElementById('soundToggle').textContent = `Sound: ${game.soundEnabled ? 'On' : 'Off'}`;
+        }
 
         // Start the game when page loads
         window.addEventListener('load', () => {
