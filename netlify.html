@@ -12,20 +12,38 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #2d2d2d 100%);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            color: #ffffff;
         }
 
         .header {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 1rem;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem;
             text-align: center;
             color: white;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #ffffff 0%, #cccccc 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: #999999;
+            font-weight: 400;
         }
 
         .main-container {
@@ -40,29 +58,31 @@
 
         .game-area {
             flex: 1;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
             padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(20px);
             display: flex;
             flex-direction: column;
         }
 
         .sidebar {
-            width: 300px;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
+            width: 320px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
             padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(20px);
         }
 
         .canvas-container {
             position: relative;
-            border: 3px solid #ddd;
-            border-radius: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
             overflow: hidden;
-            background: white;
-            margin: 1rem 0;
+            background: #000000;
+            margin: 1.5rem 0;
             flex: 1;
             display: flex;
             justify-content: center;
@@ -71,30 +91,38 @@
 
         #gameCanvas {
             cursor: crosshair;
-            border-radius: 7px;
+            border-radius: 14px;
         }
 
         .controls {
             display: flex;
             gap: 1rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             flex-wrap: wrap;
         }
 
         .btn {
-            padding: 0.7rem 1.5rem;
-            border: none;
-            border-radius: 8px;
+            padding: 0.8rem 1.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
             cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            background: rgba(255, 255, 255, 0.1);
             color: white;
+            backdrop-filter: blur(10px);
         }
 
         .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transform: translateY(-1px);
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
+        }
+
+        .btn:active {
+            transform: translateY(0);
         }
 
         .stats-grid {
@@ -105,49 +133,64 @@
         }
 
         .stat-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             color: white;
-            padding: 1rem;
-            border-radius: 10px;
+            padding: 1.5rem;
+            border-radius: 16px;
             text-align: center;
+            backdrop-filter: blur(10px);
         }
 
         .stat-number {
-            font-size: 2rem;
-            font-weight: bold;
+            font-size: 2.2rem;
+            font-weight: 700;
             display: block;
+            margin-bottom: 0.3rem;
         }
 
         .stat-label {
-            font-size: 0.9rem;
-            opacity: 0.9;
+            font-size: 0.85rem;
+            color: #cccccc;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .leaderboard {
             margin-top: 2rem;
         }
 
+        .leaderboard h3 {
+            color: white;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
         .user-item {
             display: flex;
             align-items: center;
-            padding: 0.8rem;
-            margin-bottom: 0.5rem;
-            background: #f8f9fa;
-            border-radius: 8px;
-            transition: transform 0.2s ease;
+            padding: 1rem;
+            margin-bottom: 0.8rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            transition: all 0.2s ease;
         }
 
         .user-item:hover {
-            transform: translateX(5px);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateX(2px);
         }
 
         .user-color {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
             margin-right: 1rem;
-            border: 2px solid white;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
         .user-info {
@@ -155,35 +198,49 @@
         }
 
         .user-name {
-            font-weight: bold;
-            color: #333;
+            font-weight: 600;
+            color: #ffffff;
+            font-size: 0.95rem;
         }
 
         .user-blocks {
-            font-size: 0.9rem;
-            color: #666;
+            font-size: 0.8rem;
+            color: #999999;
+            margin-top: 0.2rem;
         }
 
         .status {
             text-align: center;
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+            border: 1px solid;
         }
 
         .status.connected {
-            background: #d4edda;
-            color: #155724;
+            background: rgba(34, 197, 94, 0.1);
+            border-color: rgba(34, 197, 94, 0.3);
+            color: #22c55e;
         }
 
         .status.connecting {
-            background: #fff3cd;
-            color: #856404;
+            background: rgba(251, 191, 36, 0.1);
+            border-color: rgba(251, 191, 36, 0.3);
+            color: #fbbf24;
         }
 
         .status.disconnected {
-            background: #f8d7da;
-            color: #721c24;
+            background: rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+        }
+
+        .sidebar h3 {
+            color: white;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            font-weight: 600;
         }
 
         @media (max-width: 768px) {
@@ -199,12 +256,20 @@
             .controls {
                 justify-content: center;
             }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .header p {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>🎮 BlockClaim</h1>
+        <h1>BlockClaim</h1>
         <p>Real-time Multiplayer Block Capture Game</p>
     </div>
 
@@ -215,10 +280,10 @@
             </div>
 
             <div class="controls">
-                <button class="btn" onclick="zoomIn()">🔍 Zoom In</button>
-                <button class="btn" onclick="zoomOut()">🔍 Zoom Out</button>
-                <button class="btn" onclick="resetView()">🏠 Reset View</button>
-                <button class="btn" onclick="refreshGame()">🔄 Refresh</button>
+                <button class="btn" onclick="zoomIn()">Zoom In</button>
+                <button class="btn" onclick="zoomOut()">Zoom Out</button>
+                <button class="btn" onclick="resetView()">Reset View</button>
+                <button class="btn" onclick="refreshGame()">Refresh</button>
             </div>
 
             <div class="canvas-container">
@@ -227,7 +292,7 @@
         </div>
 
         <div class="sidebar">
-            <h3>📊 Game Statistics</h3>
+            <h3>Game Statistics</h3>
             <div class="stats-grid">
                 <div class="stat-card">
                     <span class="stat-number" id="claimedBlocks">0</span>
@@ -248,7 +313,7 @@
             </div>
 
             <div class="leaderboard">
-                <h3>🏆 Leaderboard</h3>
+                <h3>Leaderboard</h3>
                 <div id="leaderboard">
                     <p style="text-align: center; color: #666; margin-top: 1rem;">No players yet</p>
                 </div>
@@ -364,8 +429,8 @@
                     <div class="user-item ${user.id === this.currentUser?.id ? 'current-user' : ''}">
                         <div class="user-color" style="background-color: ${user.color}"></div>
                         <div class="user-info">
-                            <div class="user-name">${index + 1}. ${user.name}</div>
-                            <div class="user-blocks">${user.blocksOwned} blocks</div>
+                            <div class="user-name">#${index + 1} ${user.name}</div>
+                            <div class="user-blocks">${user.blocksOwned} blocks claimed</div>
                         </div>
                     </div>
                 `).join('');
@@ -461,8 +526,8 @@
                 this.ctx.translate(this.offsetX, this.offsetY);
                 this.ctx.scale(this.zoom, this.zoom);
 
-                // Draw grid
-                this.ctx.strokeStyle = '#e0e0e0';
+                // Draw sophisticated grid
+                this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
                 this.ctx.lineWidth = 0.5;
                 
                 for (let x = 0; x <= this.gridSize; x++) {
@@ -479,10 +544,23 @@
                     this.ctx.stroke();
                 }
 
-                // Draw claimed blocks
+                // Draw claimed blocks with monochrome theme
                 Object.values(this.blocks).forEach(block => {
-                    this.ctx.fillStyle = block.ownerColor;
+                    // Convert user color to grayscale intensity
+                    const intensity = this.getGrayscaleFromColor(block.ownerColor);
+                    this.ctx.fillStyle = `rgba(255, 255, 255, ${intensity})`;
+                    
                     this.ctx.fillRect(
+                        block.x * this.blockSize + 1,
+                        block.y * this.blockSize + 1,
+                        this.blockSize - 2,
+                        this.blockSize - 2
+                    );
+                    
+                    // Add subtle border for distinction
+                    this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+                    this.ctx.lineWidth = 1;
+                    this.ctx.strokeRect(
                         block.x * this.blockSize + 1,
                         block.y * this.blockSize + 1,
                         this.blockSize - 2,
@@ -491,6 +569,17 @@
                 });
 
                 this.ctx.restore();
+            }
+
+            getGrayscaleFromColor(hexColor) {
+                // Convert hex to RGB and then to grayscale intensity
+                const r = parseInt(hexColor.substr(1, 2), 16);
+                const g = parseInt(hexColor.substr(3, 2), 16);
+                const b = parseInt(hexColor.substr(5, 2), 16);
+                
+                // Use luminance formula for better grayscale conversion
+                const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+                return Math.min(0.9, Math.max(0.2, luminance)); // Ensure visibility
             }
 
             updateStatus(type, message) {

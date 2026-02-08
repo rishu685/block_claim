@@ -11,13 +11,14 @@ class UserManager {
   constructor() {
     this.users = [];
     this.colors = [
-      '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FECA57',
-      '#FF9FF3', '#54A0FF', '#5F27CD', '#00D2D3', '#FF9F43',
-      '#FFD93D', '#6C5CE7', '#A29BFE', '#FD79A8', '#E17055'
+      '#FFFFFF', '#E5E5E5', '#CCCCCC', '#B3B3B3', '#999999',
+      '#808080', '#666666', '#4D4D4D', '#333333', '#1A1A1A',
+      '#F0F0F0', '#D9D9D9', '#BFBFBF', '#A6A6A6', '#8C8C8C'
     ];
     this.names = [
-      'Block Hunter', 'Grid Master', 'Pixel Warrior', 'Square Seeker', 'Territory King',
-      'Block Ninja', 'Grid Explorer', 'Pixel Pioneer', 'Square Conqueror', 'Area Defender'
+      'Shadow Walker', 'Void Seeker', 'Grid Ghost', 'Block Phantom', 'Dark Knight',
+      'Steel Hunter', 'Iron Guardian', 'Stone Warrior', 'Pixel Sage', 'Code Ninja',
+      'Mono Master', 'Gray Fox', 'Silent Strike', 'Block Reaper', 'Grid Warden'
     ];
   }
 
