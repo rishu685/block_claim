@@ -259,28 +259,6 @@ MAX_GRID_SIZE=50             # Grid dimensions (50×50 = 2,500 blocks)
 2. **No Real-time Chat**: Would require WebSocket alternative
 3. **Limited History**: No replay or game history features
 
-## 🛣️ Future Enhancements
-
-### Gameplay Features
-- [ ] Territory control rules (adjacent blocks)
-- [ ] Power-ups and special abilities
-- [ ] Timed challenges and events
-- [ ] Team-based gameplay modes
-- [ ] Block decay/expiration system
-
-### Technical Improvements
-- [ ] Horizontal scaling with Redis
-- [ ] Progressive Web App (PWA) support
-- [ ] WebRTC for peer-to-peer updates
-- [ ] Machine learning for bot players
-- [ ] Analytics and telemetry
-
-### UI/UX Enhancements
-- [ ] Minimap for navigation
-- [ ] Sound effects and haptic feedback  
-- [ ] Themes and customization
-- [ ] Player avatars and profiles
-- [ ] Chat and social features
 
 ## 🧪 Testing
 
@@ -322,4 +300,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Built with ❤️ for real-time multiplayer gaming**
 
-Try it live: [BlockClaim Game](your-deployment-url-here)
