@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlockClaim - Real-time Block Capture</title>
+    <meta name="description" content="Capture blocks in real-time with other players. A multiplayer grid-based game.">
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <h1 class="logo">
+                    <span class="logo-icon">⬜</span>
+                    BlockClaim
+                </h1>
+                <div class="user-info">
+                    <div class="user-badge" id="userBadge">
+                        <div class="user-color" id="userColor"></div>
+                        <span class="user-name" id="userName">Connecting...</span>
+                        <button class="edit-name-btn" id="editNameBtn" title="Change your name">✏️</button>
+                    </div>
+                    <div class="connection-status" id="connectionStatus">
+                        <div class="status-dot connecting"></div>
+                        <span>Connecting...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <div class="app-layout">
+                <!-- Stats Panel -->
+                <aside class="stats-panel" id="statsPanel">
+                    <div class="stats-header">
+                        <h3>Game Stats</h3>
+                        <button class="toggle-stats" id="toggleStats">📊</button>
+                    </div>
+                    
+                    <div class="stats-content">
+                        <div class="stat-item">
+                            <span class="stat-label">Connected Players</span>
+                            <span class="stat-value" id="connectedUsers">0</span>
+                        </div>
+                        
+                        <div class="stat-item">
+                            <span class="stat-label">Blocks Claimed</span>
+                            <span class="stat-value" id="claimedBlocks">0 / 2,500</span>
+                        </div>
+                        
+                        <div class="stat-item">
+                            <span class="stat-label">Your Blocks</span>
+                            <span class="stat-value" id="userBlocks">0</span>
+                        </div>
+
+                        <div class="leaderboard">
+                            <h4>Top Players</h4>
+                            <div class="leaderboard-list" id="leaderboardList">
+                                <div class="loading-state">No data yet...</div>
+                            </div>
+                        </div>
+
+                        <div class="online-users">
+                            <h4>Online Now</h4>
+                            <div class="online-users-list" id="onlineUsersList">
+                                <div class="loading-state">Loading...</div>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Game Area -->
+                <div class="game-container">
+                    <div class="game-header">
+                        <h2>Capture Territory</h2>
+                        <p class="game-description">Click on empty blocks to claim them. See others claim blocks in real-time!</p>
+                        
+                        <div class="game-controls">
+                            <button class="control-btn" id="zoomInBtn">🔍+</button>
+                            <button class="control-btn" id="zoomOutBtn">🔍-</button>
+                            <button class="control-btn" id="centerBtn">🎯</button>
+                            <div class="zoom-level">Zoom: <span id="zoomLevel">100%</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Grid Container -->
+                    <div class="grid-container" id="gridContainer">
+                        <div class="grid-wrapper" id="gridWrapper">
+                            <canvas id="gameCanvas" class="game-canvas"></canvas>
+                            <div class="grid-overlay" id="gridOverlay"></div>
+                        </div>
+                    </div>
+
+                    <!-- Mobile-specific controls -->
+                    <div class="mobile-controls" id="mobileControls">
+                        <button class="mobile-btn" id="mobileZoomIn">+</button>
+                        <button class="mobile-btn" id="mobileZoomOut">-</button>
+                        <button class="mobile-btn" id="mobilePan">📱</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Modal for name editing -->
+    <div class="modal-overlay" id="nameModal">
+        <div class="modal">
+            <h3>Change Your Name</h3>
+            <input type="text" id="newNameInput" placeholder="Enter your new name..." maxlength="20">
+            <div class="modal-buttons">
+                <button class="btn btn-secondary" id="cancelNameBtn">Cancel</button>
+                <button class="btn btn-primary" id="saveNameBtn">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <h2>Loading BlockClaim...</h2>
+            <p>Connecting to real-time server...</p>
+        </div>
+    </div>
+
+    <!-- Error Screen -->
+    <div class="error-screen" id="errorScreen" style="display: none;">
+        <div class="error-content">
+            <h2>Connection Failed</h2>
+            <p>Unable to connect to the server. Please check your internet connection and try again.</p>
+            <button class="btn btn-primary" onclick="location.reload()">Retry</button>
+        </div>
+    </div>
+
+    <!-- Instructions for first-time users -->
+    <div class="instructions-overlay" id="instructionsOverlay">
+        <div class="instructions-modal">
+            <h3>Welcome to BlockClaim! 🎮</h3>
+            <ul>
+                <li>Click any empty (gray) block to claim it</li>
+                <li>Your claimed blocks will appear in your color</li>
+                <li>See other players claim blocks in real-time</li>
+                <li>Use zoom controls to navigate the 50×50 grid</li>
+                <li>Try to claim as many blocks as possible!</li>
+            </ul>
+            <button class="btn btn-primary" id="startGameBtn">Start Playing!</button>
+        </div>
+    </div>
+
+    <!-- Include Socket.IO client -->
+    <script src="/socket.io/socket.io.js"></script>
+    
+    <!-- Game Scripts -->
+    <script src="/js/utils.js"></script>
+    <script src="/js/grid.js"></script>
+    <script src="/js/socket-handler.js"></script>
+    <script src="/js/ui.js"></script>
+    <script src="/js/app.js"></script>
+</body>
+</html>
