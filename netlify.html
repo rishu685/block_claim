@@ -854,8 +854,8 @@
 
                 // Draw grid if enabled
                 if (this.showGrid) {
-                    this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
-                    this.ctx.lineWidth = 0.5;
+                    this.ctx.strokeStyle = 'rgba(200, 200, 200, 0.8)';
+                    this.ctx.lineWidth = 0.7;
                     
                     for (let x = 0; x <= this.gridSize; x++) {
                         this.ctx.beginPath();
@@ -886,7 +886,7 @@
                     );
                     
                     // Add subtle border for distinction
-                    this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.6)';
+                    this.ctx.strokeStyle = 'rgba(200, 200, 200, 0.9)';
                     this.ctx.lineWidth = 1;
                     this.ctx.strokeRect(
                         block.x * this.blockSize + 1,
