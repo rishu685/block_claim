@@ -1,4 +1,4 @@
-# BlockClaim - Real-time Block Capture Game 
+# BlockClaim - Real-time Block Capture Game
 
 A real-time multiplayer web application where users can claim blocks on a shared 50×50 grid. Built with serverless architecture and deployed on Netlify for instant global access!
 
